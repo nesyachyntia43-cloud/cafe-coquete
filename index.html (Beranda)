@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Coquette - Pesona Estetik dalam Setiap Cangkir</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">Café Coquette</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Beranda ♡</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="detail.html">Detail</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <span class="heart-decoration" style="font-size: 3rem;">🌸</span>
+                <h1>Selamat Datang di Café Coquette</h1>
+                <p class="hero-subtitle">"Di mana setiap tegukan adalah pelukan hangat"</p>
+                <p>Temukan pesona manis dalam setiap hidangan, dikelilingi suasana estetik yang memanjakan jiwa.</p>
+                <a href="#reservation" class="btn btn-primary">Reservasi Sekarang ♡</a>
+            </div>
+        </section>
+
+        <!-- Featured Menu -->
+        <section class="featured-menu container">
+            <div class="ornament-ribbon">
+                <h2>Menu Unggulan Kami</h2>
+            </div>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 2rem;">
+                Dipilih dengan cinta, disajikan dengan senyuman ♡
+            </p>
+            <div class="menu-grid" id="featuredMenu">
+                <!-- Akan diisi oleh JavaScript -->
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="menu.html" class="btn btn-secondary">Lihat Semua Menu ♡</a>
+            </div>
+        </section>
+
+        <!-- Café Info Section -->
+        <section class="cafe-info">
+            <div class="container">
+                <div class="ornament-ribbon">
+                    <h2 style="color: var(--pink-dark);">Mengapa Café Coquette?</h2>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-icon">🌸</div>
+                        <h3>Suasana Estetik</h3>
+                        <p>Interior bernuansa pink dengan dekorasi bunga segar, pita, dan ornamen vintage yang Instagram-able.</p>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">☕</div>
+                        <h3>Racikan Premium</h3>
+                        <p>Kopi pilihan dan bahan berkualitas tinggi, diracik oleh barista berpengalaman dengan sentuhan coquette.</p>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">💕</div>
+                        <h3>Pelayanan Hangat</h3>
+                        <p>Staf kami siap menyambut dengan senyuman manis dan pelayanan yang membuat Anda merasa di rumah.</p>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📸</div>
+                        <h3>Spot Fotogenik</h3>
+                        <p>Setiap sudut café dirancang untuk menghasilkan foto-foto cantik yang siap mempercantik feed Instagram Anda.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reservation Form -->
+        <section id="reservation" class="container">
+            <div class="ornament-ribbon">
+                <h2 style="color: var(--pink-dark);">Reservasi Meja</h2>
+            </div>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 2rem;">
+                Booking meja Anda dan nikmati pengalaman coquette yang tak terlupakan ♡
+            </p>
+            <form class="booking-form" onsubmit="return submitReservation(event)">
+                <div class="form-group">
+                    <label for="name">🌸 Nama Lengkap</label>
+                    <input type="text" id="name" name="name" required placeholder="Nama kamu siapa?">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">💌 Email</label>
+                    <input type="email" id="email" name="email" required placeholder="coquette@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="guests">👥 Jumlah Pengunjung</label>
+                    <input type="number" id="guests" name="guests" required min="1" max="10" placeholder="1-10 orang">
+                </div>
+                
+                <div class="form-group">
+                    <label for="menu">🍽️ Menu/Paket Pilihan</label>
+                    <select id="menu" name="menu">
+                        <option value="">Pilih Menu (Opsional)</option>
+                       
