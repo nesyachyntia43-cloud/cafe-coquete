@@ -1,0 +1,90 @@
+// Fungsi untuk halaman menu
+function initMenu() {
+    const menuGrid = document.getElementById('menuGrid');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const searchInput = document.getElementById('searchInput');
+    const sortSelect = document.getElementById('sortSelect');
+    
+    if (!menuGrid) return;
+    
+    // Render semua menu
+    function renderMenu(menus) {
+        if (menus.length === 0) {
+            menuGrid.innerHTML = `
+                <div style="text-align: center; grid-column: 1/-1; padding: 3rem;">
+                    <p style="font-size: 1.5rem; color: var(--pink-dark);">🌸</p>
+                    <p style="color: var(--text-light);">Maaf, menu tidak ditemukan</p>
+                    <p style="color: var(--text-light); font-size: 0.9rem;">Coba kata kunci atau filter lain ya!</p>
+                </div>
+            `;
+            return;
+        }
+        menuGrid.innerHTML = menus.map(menu => renderMenuCard(menu)).join('');
+    }
+    
+    // Filter dan Sort Menu
+    function filterAndSortMenu() {
+        let filteredMenus = [...menuData];
+        
+        // Filter by category
+        if (categoryFilter && categoryFilter.value) {
+            filteredMenus = filteredMenus.filter(menu => {
+                if (categoryFilter.value === 'makanan' || categoryFilter.value === 'minuman') {
+                    return menu.category === categoryFilter.value;
+                }
+                return menu.subcategory === categoryFilter.value;
+            });
+        }
+        
+        // Search filter
+        if (searchInput && searchInput.value.trim()) {
+            const searchTerm = searchInput.value.toLowerCase();
+            filteredMenus = filteredMenus.filter(menu => 
+                menu.name.toLowerCase().includes(searchTerm) ||
+                menu.description.toLowerCase().includes(searchTerm) ||
+                menu.ingredients.toLowerCase().includes(searchTerm)
+            );
+        }
+        
+        // Sort
+        if (sortSelect && sortSelect.value) {
+            switch(sortSelect.value) {
+                case 'price-low':
+                    filteredMenus.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredMenus.sort((a, b) => b.price - a.price);
+                    break;
+                case 'name-asc':
+                    filteredMenus.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'name-desc':
+                    filteredMenus.sort((a, b) => b.name.localeCompare(a.name));
+                    break;
+            }
+        }
+        
+        renderMenu(filteredMenus);
+    }
+    
+    // Event Listeners
+    if (categoryFilter) {
+        categoryFilter.addEventListener('change', filterAndSortMenu);
+    }
+    
+    if (searchInput) {
+        searchInput.addEventListener('input', filterAndSortMenu);
+    }
+    
+    if (sortSelect) {
+        sortSelect.addEventListener('change', filterAndSortMenu);
+    }
+    
+    // Inisialisasi
+    renderMenu(menuData);
+}
+
+// Inisialisasi saat halaman dimuat
+document.addEventListener('DOMContentLoaded', function() {
+    initMenu();
+});
