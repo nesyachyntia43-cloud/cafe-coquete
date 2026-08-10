@@ -1,0 +1,232 @@
+// Data Dummy Menu Café Coquette
+const menuData = [
+    {
+        id: 1,
+        name: "Strawberry Rose Latte",
+        category: "minuman",
+        subcategory: "kopi",
+        price: 45000,
+        description: "Kopi latte lembut dengan sirup strawberry dan aroma mawar, disajikan dengan kelopak mawar edible dan foam berbentuk hati.",
+        image: "https://via.placeholder.com/400x300/FFB6C1/FFFFFF?text=Strawberry+Rose+Latte",
+        detailImage: "https://via.placeholder.com/600x450/FFB6C1/FFFFFF?text=Strawberry+Rose+Latte+Detail",
+        ingredients: "Espresso, susu segar, sirup strawberry, ekstrak mawar, kelopak mawar edible",
+        calories: "180 kkal"
+    },
+    {
+        id: 2,
+        name: "Pink Velvet Cake",
+        category: "makanan",
+        subcategory: "dessert",
+        price: 55000,
+        description: "Kue lembut berlapis krim keju pink dengan taburan serbuk red velvet dan hiasan bunga segar yang cantik.",
+        image: "https://via.placeholder.com/400x300/FFC0CB/FFFFFF?text=Pink+Velvet+Cake",
+        detailImage: "https://via.placeholder.com/600x450/FFC0CB/FFFFFF?text=Pink+Velvet+Cake+Detail",
+        ingredients: "Tepung terigu, cream cheese, pewarna alami beetroot, vanilla, bunga edible",
+        calories: "320 kkal"
+    },
+    {
+        id: 3,
+        name: "Cherry Blossom Tea",
+        category: "minuman",
+        subcategory: "non-kopi",
+        price: 35000,
+        description: "Teh bunga sakura premium dengan sentuhan madu dan lemon, disajikan dalam teko porselen bermotif bunga.",
+        image: "https://via.placeholder.com/400x300/FFE4E1/FFFFFF?text=Cherry+Blossom+Tea",
+        detailImage: "https://via.placeholder.com/600x450/FFE4E1/FFFFFF?text=Cherry+Blossom+Tea+Detail",
+        ingredients: "Teh putih, ekstrak sakura, madu organik, lemon, bunga sakura kering",
+        calories: "45 kkal"
+    },
+    {
+        id: 4,
+        name: "Macaron Rosé",
+        category: "makanan",
+        subcategory: "dessert",
+        price: 38000,
+        description: "Macaron Prancis rasa rosé dengan buttercream lembut, warna pink pastel yang menggoda selera.",
+        image: "https://via.placeholder.com/400x300/FFB6C1/FFFFFF?text=Macaron+Rose",
+        detailImage: "https://via.placeholder.com/600x450/FFB6C1/FFFFFF?text=Macaron+Rose+Detail",
+        ingredients: "Tepung almond, gula halus, putih telur, krim mawar, pewarna alami",
+        calories: "250 kkal"
+    },
+    {
+        id: 5,
+        name: "Coquette Brunch Plate",
+        category: "makanan",
+        subcategory: "makanan-ringan",
+        price: 75000,
+        description: "Platter brunch lengkap dengan croissant mini, scrambled egg, smoked salmon, avocado rose, dan salad segar.",
+        image: "https://via.placeholder.com/400x300/FFF0F5/FFFFFF?text=Coquette+Brunch",
+        detailImage: "https://via.placeholder.com/600x450/FFF0F5/FFFFFF?text=Coquette+Brunch+Detail",
+        ingredients: "Croissant, telur organik, salmon asap, alpukat, sayuran segar, balsamic glaze",
+        calories: "450 kkal"
+    },
+    {
+        id: 6,
+        name: "Lavender Honey Latte",
+        category: "minuman",
+        subcategory: "kopi",
+        price: 48000,
+        description: "Kopi latte dengan madu lavender yang menenangkan, disajikan dengan latte art bunga dan taburan lavender kering.",
+        image: "https://via.placeholder.com/400x300/E6E6FA/FFFFFF?text=Lavender+Honey+Latte",
+        detailImage: "https://via.placeholder.com/600x450/E6E6FA/FFFFFF?text=Lavender+Honey+Latte+Detail",
+        ingredients: "Espresso double shot, susu oat, madu lavender, ekstrak vanilla, lavender kering",
+        calories: "195 kkal"
+    }
+];
+
+// Fungsi Format Mata Uang
+function formatCurrency(amount) {
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }).format(amount);
+}
+
+// Fungsi Render Menu Card
+function renderMenuCard(menu) {
+    return `
+        <div class="menu-card">
+            <img src="${menu.image}" alt="${menu.name}" class="menu-image" 
+                 onerror="this.src='https://via.placeholder.com/400x300/FFB6C1/FFFFFF?text=${encodeURIComponent(menu.name)}'">
+            <div class="menu-info">
+                <span class="menu-category">${getCategoryLabel(menu.subcategory)}</span>
+                <h3>${menu.name}</h3>
+                <p class="menu-description">${menu.description}</p>
+                <p class="price">${formatCurrency(menu.price)}</p>
+                <a href="detail.html?id=${menu.id}" class="btn btn-primary" style="display: block; text-align: center; margin-top: 1rem;">
+                    Lihat Detail ♡
+                </a>
+            </div>
+        </div>
+    `;
+}
+
+// Fungsi Label Kategori
+function getCategoryLabel(subcategory) {
+    const labels = {
+        'kopi': '☕ Kopi',
+        'non-kopi': '🍵 Non-Kopi',
+        'dessert': '🍰 Dessert',
+        'makanan-ringan': '🥐 Makanan Ringan'
+    };
+    return labels[subcategory] || subcategory;
+}
+
+// Fungsi Reservasi
+function submitReservation(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const formData = new FormData(form);
+    
+    // Validasi Dasar
+    const name = formData.get('name')?.trim();
+    const email = formData.get('email')?.trim();
+    const guests = formData.get('guests');
+    const date = formData.get('date');
+    const time = formData.get('time');
+    
+    // Validasi field
+    if (!name || !email || !guests || !date || !time) {
+        showAlert('🌸 Mohon lengkapi semua field reservasi ya!', 'error');
+        return false;
+    }
+    
+    if (!isValidEmail(email)) {
+        showAlert('💌 Format email tidak valid, periksa kembali ya!', 'error');
+        return false;
+    }
+    
+    if (!isValidDate(date)) {
+        showAlert('📅 Reservasi minimal H+1 dari hari ini ya!', 'error');
+        return false;
+    }
+    
+    if (guests < 1 || guests > 10) {
+        showAlert('👥 Jumlah pengunjung harus antara 1-10 orang', 'error');
+        return false;
+    }
+    
+    // Simulasi Pengiriman Data
+    const reservationData = {
+        name: name,
+        email: email,
+        guests: guests,
+        date: date,
+        time: time,
+        menu: formData.get('menu'),
+        notes: formData.get('notes'),
+        timestamp: new Date().toISOString()
+    };
+    
+    console.log('Reservation Data:', reservationData);
+    
+    // Tampilkan Alert Sukses
+    showAlert(`✨ Terima kasih ${name}! Reservasi untuk ${guests} orang pada ${formatDate(date)} pukul ${time} telah berhasil. Kami akan mengirimkan konfirmasi ke email ${email}. Sampai jumpa di Café Coquette! ♡`, 'success');
+    
+    // Reset Form
+    form.reset();
+    
+    return false;
+}
+
+// Fungsi Validasi
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function isValidDate(date) {
+    const selectedDate = new Date(date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const minDate = new Date(today);
+    minDate.setDate(minDate.getDate() + 1);
+    
+    return selectedDate >= minDate;
+}
+
+function formatDate(dateString) {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('id-ID', options);
+}
+
+function showAlert(message, type) {
+    // Hapus alert sebelumnya
+    const existingAlert = document.querySelector('.alert');
+    if (existingAlert) {
+        existingAlert.remove();
+    }
+    
+    // Buat alert baru
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type}`;
+    alertDiv.innerHTML = message;
+    
+    // Temukan tempat untuk menampilkan alert
+    const form = document.querySelector('.booking-form');
+    if (form) {
+        form.parentNode.insertBefore(alertDiv, form);
+    } else {
+        // Jika tidak ada form, tambahkan di awal main
+        const main = document.querySelector('main');
+        if (main) {
+            main.insertBefore(alertDiv, main.firstChild);
+        }
+    }
+    
+    // Hapus alert setelah 5 detik
+    setTimeout(() => {
+        if (alertDiv) {
+            alertDiv.style.opacity = '0';
+            alertDiv.style.transition = 'opacity 0.5s';
+            setTimeout(() => alertDiv.remove(), 500);
+        }
+    }, 5000);
+    
+    // Scroll ke alert
+    alertDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
